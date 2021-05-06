@@ -7,8 +7,10 @@
                 <div class="form-group">
                     <div id="drop-zone">
                         <div id="fotoBanco">
-                            <input type="hidden" id="profile_pic" name="profile_pic">
+                            
                             @if (isset($registro->profile_pic))
+                                 <input type="hidden" id="profile_pic" name="profile_pic" 
+                                    value="{{ $registro->profile_pic  }}" />
                                 <img src="{{ url('/imagem', $registro->profile_pic) }}" class="avatar" />
                             @else
                                 <img id="imageUpload" src="{{ url('/imagem', 'boy.png') }}" class="avatar" />
@@ -141,12 +143,8 @@
 
         function sendToServer(foto){
             var formData = new FormData();
-
-            console.log($('#id').val());
-
             formData.append('image',foto);
             formData.append('id',$('#id').val());
-       
             $.ajax({
                 url: "{{ url('/store') }}",
                 method: 'POST',
@@ -163,8 +161,6 @@
                 success : function(response){
                     console.log(response.nomeArquivo);
                     $('#profile_pic').val(response.nomeArquivo);
-
-                    console.log($('#profile_pic').val());
                 },
                 error:function(data){
                     console.log("erro de upload "+data)
@@ -172,14 +168,43 @@
 
                 }
             })   
-
-
             
         }
 
-
-
         function excluirFoto(e){
+            console.log($('#profile_pic').val())
+            $.ajax({
+                url: "{{ url('/imagem/excluir') }}",
+                // url: "{{ route('imagem.excluir') }}"
+                type:"POST",
+                data:{
+                    image: $('#profile_pic').val()
+                },
+                beforeSend: function(xhr, type) {
+                    if (!type.crossDomain) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                    }
+                },
+                success: function(response){
+                    console.log(response.nomeArquivo);
+                    $('#profile_pic').val('');
+                    //document.getElementById("imageUpload").html('<img id="imageUpload" src="{{ url("/imagem", "boy.png") }}" class="avatar" />')
+                    var elemento = document.getElementById("imageUpload");
+
+                    console.log(elemento);
+
+                   // elemento.src = "{{ url('/imagem', 'boy.png') }}";
+                   // elemento.html('<img id="imageUpload" src="{{ url("/imagem", "boy.png") }}" class="avatar" />');
+
+                    $('#profile_pic').val(response.nomeArquivo);
+                },
+                error:function(response){
+                    console.log("erro de exclusão");
+                    document.getElementById('imageUpload').src = "{{ url('/imagem', 'boy.png') }}";
+                    $('#profile_pic').val(response.nomeArquivo);
+               }
+
+            })
 
         }
 

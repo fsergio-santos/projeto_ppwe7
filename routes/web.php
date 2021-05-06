@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::get('/imagem/{imagem}', 'ImageController@getImages')->name('imagem.get');
 Route::get('/thumbnail/{imagem}', 'ImageController@getThumbnail')->name('thumbnail.get');
 Route::post('/store','ImageController@store')->name('imagem.store');

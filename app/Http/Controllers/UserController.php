@@ -37,6 +37,10 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
+
+        if (empty($data['profile_pic'])){
+           $data['profile_pic']='boy.png';
+        }
      
         $this->repository->create($data);
         return redirect()->route('usuario.listar');

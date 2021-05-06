@@ -6,16 +6,15 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Image;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ImageController extends Controller
 {
     
-    private $out;
 
-    public function __construct(ConsoleOutput $out)
+
+    public function __construct()
     {
-        $this->out = $out;
+
     }
 
     
@@ -42,10 +41,10 @@ class ImageController extends Controller
             $smallthumbnailpath = public_path('storage/img/thumbnail/'.$smallthumbnail);
             
             $this->createThumbnail($smallthumbnailpath,150,93);
-
+    
             return response()->json(array('nomeArquivo'=>$filenametostore));
         } else {
-            return response()->json(array('nomeArquivo' => 'arquivo não recebido'));
+            return response()->json(array('nomeArquivo' => 'boy.png'));
         }
             
     }
@@ -70,7 +69,10 @@ class ImageController extends Controller
     
 
     public function excluir(Request $request){
-
+        $foto = $request->get('image');
+        Storage::delete('public/img/normal/'.$foto);
+        Storage::delete('public/img/thumbnail/'.'_small_'.$foto);
+        return response()->json(array('nomeArquivo'=>'boy.png'));  
     }
 
 

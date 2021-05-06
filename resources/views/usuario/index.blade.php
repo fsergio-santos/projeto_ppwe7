@@ -29,7 +29,11 @@
                                 @foreach($registros as $registro )   
                                 <tr>
                                     <td>
-                                      <img src="{{ url('/thumbnail', $registro->profile_pic )}}" class="img-avatar"/>
+                                        @if (isset($registro->profile_pic))
+                                            <img src="{{ url('/thumbnail', $registro->profile_pic) }}" class="img-avatar" />
+                                        @else
+                                            <img src="{{ url('/thumbnail', 'boy.png') }}" class="img-avatar" />
+                                        @endif 
                                     </td>  
                                     <td>{{ $registro->id }}</td>
                                     <td>{{ $registro->name }}</td>
