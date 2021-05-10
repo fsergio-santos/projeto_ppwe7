@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -25,8 +26,10 @@ class ImageController extends Controller
             if ($request->id){
                 $usuario = User::find($request->id);
                 $foto = $usuario->profile_pic;
-                Storage::delete('public/img/normal/'.$foto);
-                Storage::delete('public/img/thumbnail/'.'_small_'.$foto);  
+                if ($foto != 'boy.png'){
+                    Storage::delete('public/img/normal/'.$foto);
+                    Storage::delete('public/img/thumbnail/'.'_small_'.$foto);  
+                }
             }
 
             $filenamewithextension = $request->image->getClientOriginalName();

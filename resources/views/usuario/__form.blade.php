@@ -7,14 +7,10 @@
                 <div class="form-group">
                     <div id="drop-zone">
                         <div id="fotoBanco">
-                            
-                            @if (isset($registro->profile_pic))
-                                 <input type="hidden" id="profile_pic" name="profile_pic" 
-                                    value="{{ $registro->profile_pic  }}" />
-                                <img src="{{ url('/imagem', $registro->profile_pic) }}" class="avatar" />
-                            @else
-                                <img id="imageUpload" src="{{ url('/imagem', 'boy.png') }}" class="avatar" />
-                            @endif
+                            <input type="hidden" id="profile_pic" name="profile_pic"/>
+                            <img id="imageUpload" src="{{ isset($registro->profile_pic) ? 
+                                                  url('/imagem', $registro->profile_pic) :
+                                                  url('/imagem', 'boy.png') }}" class="avatar" />
                         </div>
                         <div id="clickHereLeft" style="float:left;">
                             <div style="text-align: center;">
@@ -110,8 +106,7 @@
 @section('javascript')
 
   <script>
-
-
+ 
         $("#fileInput").change(function(e){
            e.preventDefault();
            enviarFoto(this);
@@ -124,7 +119,7 @@
 
           //preparar um pacote
         function enviarFoto(input){
-          
+
           if (input.files && input.files[0]){
               var reader = new FileReader();
               var filename = $('#fileInput').val();
@@ -159,23 +154,18 @@
                     }
                 },
                 success : function(response){
-                    console.log(response.nomeArquivo);
                     $('#profile_pic').val(response.nomeArquivo);
                 },
                 error:function(data){
                     console.log("erro de upload "+data)
-                    //alert(data)
-
                 }
             })   
             
         }
 
         function excluirFoto(e){
-            console.log($('#profile_pic').val())
             $.ajax({
                 url: "{{ url('/imagem/excluir') }}",
-                // url: "{{ route('imagem.excluir') }}"
                 type:"POST",
                 data:{
                     image: $('#profile_pic').val()
@@ -188,20 +178,14 @@
                 success: function(response){
                     console.log(response.nomeArquivo);
                     $('#profile_pic').val('');
-                    //document.getElementById("imageUpload").html('<img id="imageUpload" src="{{ url("/imagem", "boy.png") }}" class="avatar" />')
-                    var elemento = document.getElementById("imageUpload");
-
-                    console.log(elemento);
-
-                   // elemento.src = "{{ url('/imagem', 'boy.png') }}";
-                   // elemento.html('<img id="imageUpload" src="{{ url("/imagem", "boy.png") }}" class="avatar" />');
-
-                    $('#profile_pic').val(response.nomeArquivo);
-                },
-                error:function(response){
-                    console.log("erro de exclusão");
                     document.getElementById('imageUpload').src = "{{ url('/imagem', 'boy.png') }}";
                     $('#profile_pic').val(response.nomeArquivo);
+                    $('#fileInput').val('');
+                },
+                error:function(response){
+                    document.getElementById('imageBanco').src = "{{ url('/imagem', 'boy.png') }}";
+                    $('#profile_pic').val(response.nomeArquivo);
+                    $('#fileInput').val('');
                }
 
             })
