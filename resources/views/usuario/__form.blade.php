@@ -16,7 +16,7 @@
                             <div style="text-align: center;">
                                 <label for="fileInput"><i class="fa fa-upload fa-lg" ></i></label>
                             </div>
-                            <input type="file" accept=".jpg,.jpeg,.png" id="fileInput"
+                            <input type="file" accept=".jpg,.jpeg,.png" id="fileInput" name="fileInput"
                                 class="form-control hide btn-responsive">
         
                         </div>
@@ -106,7 +106,7 @@
 @section('javascript')
 
   <script>
- 
+
         $("#fileInput").change(function(e){
            e.preventDefault();
            enviarFoto(this);
@@ -119,7 +119,6 @@
 
           //preparar um pacote
         function enviarFoto(input){
-
           if (input.files && input.files[0]){
               var reader = new FileReader();
               var filename = $('#fileInput').val();
@@ -139,7 +138,9 @@
         function sendToServer(foto){
             var formData = new FormData();
             formData.append('image',foto);
+            formData.append('fotoAntiga',$('#profile_pic').val());
             formData.append('id',$('#id').val());
+            $('#fileInput').val('');
             $.ajax({
                 url: "{{ url('/store') }}",
                 method: 'POST',
@@ -154,6 +155,7 @@
                     }
                 },
                 success : function(response){
+                    console.log(response.nomeArquivo);
                     $('#profile_pic').val(response.nomeArquivo);
                 },
                 error:function(data){
@@ -176,14 +178,13 @@
                     }
                 },
                 success: function(response){
-                    console.log(response.nomeArquivo);
                     $('#profile_pic').val('');
                     document.getElementById('imageUpload').src = "{{ url('/imagem', 'boy.png') }}";
                     $('#profile_pic').val(response.nomeArquivo);
                     $('#fileInput').val('');
                 },
                 error:function(response){
-                    document.getElementById('imageBanco').src = "{{ url('/imagem', 'boy.png') }}";
+                    document.getElementById('imageUpload').src = "{{ url('/imagem', 'boy.png') }}";
                     $('#profile_pic').val(response.nomeArquivo);
                     $('#fileInput').val('');
                }

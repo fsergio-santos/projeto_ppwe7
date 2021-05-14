@@ -27,6 +27,8 @@ use Illuminate\Http\Request;
 
 Route::get('/autor/listar', 'Rest\AutorRestController@index');
 
+Route::get('/usuario/listar', 'Rest\UserRestController@index');
+
 // Route::get('/autor/alterar/{id}','Rest\AutorRestController@update');
 // Route::get('/autor/excluir/{id}','Rest\AutorRestController@delete');
 // Route::get('/autor/consultar/{id}','Rest\AutorRestController@view');

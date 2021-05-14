@@ -11,7 +11,7 @@
                         <button type="submit" class="btn btn-primary btn-lg">
                             Salvar Dados do usuário
                         </button>
-                        <a href="{{ url('/usuario/cancelar') }}" class="btn btn-secondary btn-lg ml-3">Cancelar Inclusão do usuário</a>
+                        <a id="cancelar" href="{{ url('/usuario/cancelar') }}" class="btn btn-secondary btn-lg ml-3">Cancelar Inclusão do usuário</a>
                     </div>
                 </form>
             </div>

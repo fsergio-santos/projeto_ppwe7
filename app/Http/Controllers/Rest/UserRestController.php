@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserRestController extends Controller
 {
     private $repository;
     protected $request;
@@ -21,9 +21,7 @@ class UserController extends Controller
     {
         $registros = $this->repository->all();
         //$registros = usuario::all();
-        return view('usuario.index', [
-            'registros' => $registros,
-        ]);
+        return response()->json($registros);
     }
 
     // retorna a pagina para cadastrar um novo usuario 
@@ -37,6 +35,11 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
+
+        if (empty($data['profile_pic'])){
+           $data['profile_pic']='boy.png';
+        }
+     
         $this->repository->create($data);
         return redirect()->route('usuario.listar');
     }

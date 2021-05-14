@@ -29,7 +29,14 @@ class ImageController extends Controller
                 if ($foto != 'boy.png'){
                     Storage::delete('public/img/normal/'.$foto);
                     Storage::delete('public/img/thumbnail/'.'_small_'.$foto);  
+                    $usuario->profile_pic = 'boy.png';
+                    $usuario->save();
                 }
+            }
+
+            if ($request->fotoAntiga){
+                Storage::delete('public/img/normal/'.$request->fotoAntiga);
+                Storage::delete('public/img/thumbnail/'.'_small_'.$request->fotoAntiga);
             }
 
             $filenamewithextension = $request->image->getClientOriginalName();
