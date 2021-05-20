@@ -166,12 +166,18 @@
         }
 
         function excluirFoto(e){
+            console.log($('#profile_pic').val());
+            var formData = new FormData();
+            formData.append('image',$('#imageUpload').val());
+            formData.append('id',$('#id').val());
             $.ajax({
                 url: "{{ url('/imagem/excluir') }}",
                 type:"POST",
-                data:{
-                    image: $('#profile_pic').val()
-                },
+                data:formData,
+                dataType:'JSON',
+                cache:false, 
+                contentType:false,
+                processData: false,
                 beforeSend: function(xhr, type) {
                     if (!type.crossDomain) {
                         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));

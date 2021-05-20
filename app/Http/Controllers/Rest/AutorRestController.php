@@ -35,12 +35,12 @@ class AutorRestController extends Controller
     
     
     // salvar o registro de um novo autor
-    public function create(AutorRequest $request)
+    public function create(Request $request)
     {
         $data = $request->all();
         $data['data_nascimento'] = Carbon::createFromFormat('d/m/Y',$request['data_nascimento'])->format('Y-m-d');
         $this->repository->create($data);
-        return redirect()->route('autor.listar');
+        return response()->json(['mensagem'=>'cadastro realizado com sucesso!']);
     }
 
     //retorna o registro de um autor para alteração dos dados. 
