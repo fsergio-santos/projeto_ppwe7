@@ -31,7 +31,11 @@ Route::get('/usuario/listar', 'Rest\UserRestController@index');
 
 Route::post('/autor/salvar','Rest\AutorRestController@create');
 
-// Route::get('/autor/alterar/{id}','Rest\AutorRestController@update');
+Route::get('/autor/alterar/{id}','Rest\AutorRestController@update');
+
+Route::post('/autor/update/{id}','Rest\AutorRestController@save');
+
+
 // Route::get('/autor/excluir/{id}','Rest\AutorRestController@delete');
 // Route::get('/autor/consultar/{id}','Rest\AutorRestController@view');
 
