@@ -25,6 +25,9 @@ use Illuminate\Http\Request;
 
 //Route::get('/autor/listar/{page}/{size}/{dir}/{props}', 'Rest\AutorRestController@index');
 
+Route::post("/login",'Auth\AuthController@login');
+
+
 Route::get('/autor/listar', 'Rest\AutorRestController@index');
 
 Route::get('/usuario/listar', 'Rest\UserRestController@index');

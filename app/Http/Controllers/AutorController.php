@@ -39,9 +39,7 @@ class AutorController extends Controller
     {
         $data = $request->all();
 
-        $data['data_nascimento'] = Carbon::createFromFormat('d/m/Y',$request['data_nascimento'])->format('Y-m-d');
-        
-    
+        //$data['data_nascimento'] = Carbon::createFromFormat('d/m/Y',$request['data_nascimento'])->format('Y-m-d');
 
         $this->repository->create($data);
         return redirect()->route('autor.listar');

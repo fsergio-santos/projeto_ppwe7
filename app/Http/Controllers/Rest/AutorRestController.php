@@ -49,8 +49,7 @@ class AutorRestController extends Controller
             $query = DB::table('autors')->select('*')->orderBy( $props, $dir);   
         } else {
             $query = DB::table('autors')->where('nome', 'LIKE','%'.$search.'%')
-                                        //->orWhere('email','LIKE','%'.$search.'%')
-                                        //->orWhere('cidade','LIKE','%'.$search.'%')
+                                        ->orWhere('email','LIKE','%'.$search.'%')
                                         ->orderBy( $props, $dir); 
         } 
         
